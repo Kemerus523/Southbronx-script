@@ -1,1 +1,128 @@
-
+‎-- South Bronx The Trenches Script Hub
+‎-- UI Library
+‎local OrionLib = loadstring(game:HttpGet(("https://raw.githubusercontent.com/shlexware/Orion/main/source")))()
+‎
+‎local Window = OrionLib:MakeWindow({
+‎    Name = "JS Scripts | South Bronx",
+‎    HidePremium = false,
+‎    SaveConfig = true,
+‎    ConfigFolder = "SouthBronxHub"
+‎})
+‎
+‎-- VARIABLES
+‎local AutoFarm = false
+‎local AutoSell = false
+‎
+‎-- TAB AUTO FARM
+‎local FarmTab = Window:MakeTab({
+‎    Name = "Auto Farm",
+‎    Icon = "rbxassetid://4483345998",
+‎    PremiumOnly = false
+‎})
+‎
+‎FarmTab:AddToggle({
+‎    Name = "Auto Farm Marshmallow",
+‎    Default = false,
+‎    Callback = function(Value)
+‎        AutoFarm = Value
+‎        while AutoFarm do
+‎            
+‎            -- Water
+‎            game:GetService("ReplicatedStorage").Events.Water:FireServer()
+‎            task.wait(21)
+‎
+‎            -- Sugar + Gelatin
+‎            game:GetService("ReplicatedStorage").Events.AddSugarBlock:FireServer()
+‎            game:GetService("ReplicatedStorage").Events.AddGelatin:FireServer()
+‎            task.wait(46)
+‎
+‎            -- Take Marshmallow
+‎            game:GetService("ReplicatedStorage").Events.TakeMarshmallow:FireServer()
+‎
+‎            task.wait(2)
+‎        end
+‎    end
+‎})
+‎
+‎FarmTab:AddToggle({
+‎    Name = "Auto Sell Marshmallow",
+‎    Default = false,
+‎    Callback = function(Value)
+‎        AutoSell = Value
+‎        while AutoSell do
+‎            game:GetService("ReplicatedStorage").Events.SellMarshmallow:FireServer()
+‎            task.wait(5)
+‎        end
+‎    end
+‎})
+‎
+‎-- TELEPORT TAB
+‎local TeleportTab = Window:MakeTab({
+‎    Name = "Teleport",
+‎    Icon = "rbxassetid://4483345998",
+‎    PremiumOnly = false
+‎})
+‎
+‎TeleportTab:AddButton({
+‎    Name = "Teleport To Shop",
+‎    Callback = function()
+‎        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
+‎        CFrame.new(120,10,55) -- ubah sesuai lokasi
+‎    end
+‎})
+‎
+‎TeleportTab:AddButton({
+‎    Name = "Teleport To Marshmallow Factory",
+‎    Callback = function()
+‎        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
+‎        CFrame.new(300,12,-120)
+‎    end
+‎})
+‎
+‎-- FPS BOOST TAB
+‎local FpsTab = Window:MakeTab({
+‎    Name = "FPS Boost",
+‎    Icon = "rbxassetid://4483345998",
+‎    PremiumOnly = false
+‎})
+‎
+‎FpsTab:AddButton({
+‎    Name = "Low Graphics Mode",
+‎    Callback = function()
+‎        for i,v in pairs(game:GetDescendants()) do
+‎            if v:IsA("Texture") or v:IsA("Decal") then
+‎                v:Destroy()
+‎            end
+‎        end
+‎    end
+‎})
+‎
+‎-- PLAYER TAB
+‎local PlayerTab = Window:MakeTab({
+‎    Name = "Player",
+‎    Icon = "rbxassetid://4483345998",
+‎    PremiumOnly = false
+‎})
+‎
+‎PlayerTab:AddSlider({
+‎    Name = "WalkSpeed",
+‎    Min = 16,
+‎    Max = 100,
+‎    Default = 16,
+‎    Callback = function(Value)
+‎        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+‎    end
+‎})
+‎
+‎PlayerTab:AddSlider({
+‎    Name = "JumpPower",
+‎    Min = 50,
+‎    Max = 150,
+‎    Default = 50,
+‎    Callback = function(Value)
+‎        game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value
+‎    end
+‎})
+‎
+‎OrionLib:Init()
+‎
